@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code local settings (machine-specific)
+.claude/settings.local.json
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
