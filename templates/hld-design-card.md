@@ -1,6 +1,6 @@
 # HLD Design Card Template
-# Location: shared/templates/hld-design-card.md
-# Used by: hld-prep/CLAUDE.md (on solve) and hld-prep/.claude/commands/review.md (on review)
+# Location: templates/hld-design-card.md
+# Used by: hld-prep/CLAUDE.md (on solve) and hld-prep/.claude/commands/review-hld.md (on review)
 # Do NOT edit the SRS Tracking block structure — the review command reads these exact field names
 
 ---

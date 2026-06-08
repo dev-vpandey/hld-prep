@@ -1,7 +1,6 @@
-# Skill: SRS Interval Calculator — HLD Edition
-# Reusable by: hld-prep review command
-# Adapted from: dsa-prep SRS skill — same intervals, HLD-specific review modes
-
+---
+name: srs-revision-coach
+description: SRS interval calculator and review mode selector for HLD interview prep. Use when running an HLD revision session, computing next review date, or assigning Full/Snippet/Blitz/Sprint mode for a design card.
 ---
 
 ## Stage → Base Interval
@@ -9,7 +8,7 @@
 |---|---|
 | 1 | 1 day |
 | 2 | 3 days |
-| 3 | 7 days |
+| 3 | 10 days |
 | 4 | 21 days |
 | 5 | 45 days |
 | 6 | 90 days — graduated |
@@ -24,50 +23,27 @@
 
 Graduated exception: Blank on a graduated card → reset to Stage 3 only, not Stage 1.
 
+Double-Strong Fast-Track: Stage 3 + Last Rating Strong + Current Rating Strong → advance to Stage 4 immediately (don't wait for the 10-day base interval).
+
 ## Mode Assignment
-Given card state, assign Full, Snippet, or Blitz:
-- Last Rating Blank or Weak → Full (always, overrides everything)
-- Stage 1, Last Rating — (never reviewed) → Full
-- Stage 1–2, Last Rating Okay or Strong → Snippet
-- Stage 3–4 → Snippet
-- Stage 5–6 → Blitz
-- Graduated → Blitz
+Given card state, assign Sprint, Full, Snippet, or Blitz. Override rules run top to bottom — first match wins:
 
-## HLD Review Modes
+1. 3+ days overdue → **Blitz** (always, overrides everything)
+2. Last Rating Blank or Weak → **Full** (always)
+3. Stage 1, Last Rating — (never reviewed, saved today) → **Full Sprint** (Day+1)
+4. Stage 1, reviewed Day+1 (saved 3 days ago, no Day+3 sprint yet) → **Snippet Sprint** (Day+3)
+5. Stage 1–2, Last Rating Okay or Strong → **Snippet**
+6. Stage 3–4 → **Snippet**
+7. Stage 5–6 → **Blitz**
+8. Graduated → **Blitz**
 
-### Full Mode — Redesign from scratch
-- Show system name only. No tag, no card, no hints.
-- Prompt: "Walk me through your design for [System]. Start with requirements."
-- Let user drive all 7 phases (requirements → estimation → API → HLD → deep dive → trade-offs → failure modes)
-- "hint" → one probing question pointing at a gap
-- "blank" → mark Blank, show card immediately, move on
-- After attempt: reveal card, compare what was right vs missed, assign rating
-- Rating criteria:
-  - ✅ Strong: covered all phases, articulated trade-offs and failure modes unprompted
-  - 🟡 Okay: covered main design, missed 1 phase or 1 major trade-off
-  - 🔴 Weak: missed core insight or key component, needed hints
-  - ❌ Blank: couldn't start or got core insight wrong
+## Initial Stage Assignment (first design session only)
+Set Stage based on the session's overall rating score:
+- 5/5 → Stage 3 (first review in 10 days)
+- 4/5 → Stage 2 (first review in 3 days)
+- 3/5 and below → Stage 1 (review tomorrow)
 
-### Snippet Mode — Fill in the critical gaps
-- Show system name and tag only.
-- Prompt: "Sketch the architecture and call out the 2 most critical trade-offs you made."
-- User writes:
-  - ASCII component diagram (rough is fine)
-  - 2–3 critical trade-offs from the card
-  - Core insight in one sentence
-- "blank" → mark Blank, show full card, move on
-- After attempt:
-  - If component diagram is wrong (missing critical layer) → Weak regardless
-  - If trade-offs are vague ("I used SQL because it's reliable") → Okay at best
-  - If core insight is nailed and trade-offs are crisp → Strong
-  - Once coverage is complete → rate immediately, no follow-up
-
-### Blitz Mode — Core insight flash card
-- Show: "System: [name] — [tag] · Core insight in one sentence: ___?"
-- User answers in one sentence
-- "yes" → Strong, next problem instantly
-- "no" → show core insight from card, Blank, move on
-- No architecture, no trade-offs discussion
+See [REFERENCE.md](REFERENCE.md) for per-mode execution details.
 
 ## SRS Tracking Block (required on every card)
 ```
