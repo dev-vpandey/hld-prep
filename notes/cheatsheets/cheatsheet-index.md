@@ -1,6 +1,14 @@
 # Cheatsheet Index — Coach lookup only
 # keyword → file § section · solved card (optional)
 
+## G0 · Back-of-Envelope Estimation  (cheatsheet-g0-estimation.md)
+power of 2, power of 10, storage units, bytes kb mb gb tb pb     → § POWER OF 2 / STORAGE UNITS
+latency numbers, l1 cache, ssd, hdd, memory, network             → § LATENCY NUMBERS
+availability, nines, 99.9, 99.99, downtime                       → § AVAILABILITY NUMBERS
+qps, dau, requests per second, peak traffic, 86400               → § QPS ESTIMATION
+storage estimation, retention, record size, media storage         → § STORAGE ESTIMATION
+rounding rules, approximation, back-of-envelope                  → § ROUNDING RULES
+
 ## G1 · Building Blocks  (cheatsheet-g1-building-blocks.md)
 rate limiter, token bucket, leaky bucket, sliding window log   → § RATE LIMITER
 url shortener, hash, base62, redirect                          → § URL SHORTENER
