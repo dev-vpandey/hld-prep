@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — System Design Fundamentals</title>
+<link rel="stylesheet" href="../assets/course.css">
+<style>
+  dt { font-weight: 600; margin-top: 1.4rem; }
+  dd { margin: 0.2rem 0 0; }
+  dd .also { font-size: 0.82rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<h1>Glossary</h1>
+<p class="lesson-meta">Reference · System Design Fundamentals · authoritative terms — adhere to these in every lesson</p>
+
+<p>Definitions are tuned for MAANG Staff interview use: precise, and phrased around client-visible effects. Backed by <a href="https://dataintensive.net/">DDIA</a> unless noted.</p>
+
+<dl>
+
+<dt id="consistency-cap">Consistency (CAP sense)</dt>
+<dd><strong>Linearizability.</strong> Every read sees the most recent completed write, as if there were one copy of the data and all operations were atomic on it. Strictly narrower than the everyday word "consistency".
+<span class="also">Not the "C" in ACID. See <a href="#linearizability">linearizability</a>.</span></dd>
+
+<dt id="availability-cap">Availability (CAP sense)</dt>
+<dd>Every request to a <em>non-failing</em> node returns a non-error response — eventually. Says nothing about latency. A 5-second response counts as available; an error does not.</dd>
+
+<dt id="partition">Network partition</dt>
+<dd>A link failure that splits nodes into groups that cannot talk to each other, while each group may still be reachable by clients. Not the same as a node crashing. Assumed unavoidable in any real distributed system.</dd>
+
+<dt id="cap">CAP theorem</dt>
+<dd>When a <a href="#partition">partition</a> happens, a system must choose: keep serving reads/writes on both sides and risk stale/divergent data (<strong>AP</strong>), or refuse requests on at least one side to protect linearizability (<strong>CP</strong>). "Pick 2 of 3" is a <em>misleading</em> shorthand — P is not optional, so the real choice is C vs A <em>during</em> a partition.
+<span class="also">Source: <a href="https://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html">Kleppmann 2015</a>, <a href="https://sites.cs.washington.edu/tcss558/2020/assets/papers/week5-brewer-cap-12-years.pdf">Brewer 2012</a>.</span></dd>
+
+<dt id="pacelc">PACELC theorem</dt>
+<dd>Extends CAP with the normal case. <strong>P</strong>artition → choose <strong>A</strong>vailability or <strong>C</strong>onsistency; <strong>E</strong>lse (no partition) → choose <strong>L</strong>atency or <strong>C</strong>onsistency. Captures that synchronous replication costs latency on <em>every</em> write, partition or not.
+<span class="also">Source: <a href="https://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">Abadi 2010</a>.</span></dd>
+
+<dt id="linearizability">Linearizability</dt>
+<dd>A recency guarantee on a single object: once a write completes, every later read (by wall-clock time) returns that value or a newer one. The strongest single-object consistency model. Requires coordination → costs latency and availability.</dd>
+
+<dt id="eventual-consistency">Eventual consistency</dt>
+<dd>If writes stop, all replicas converge to the same value <em>eventually</em>. Gives no bound on how long, and permits reading stale or out-of-order values in the meantime. The default "A/L" side of PACELC.</dd>
+
+<dt id="scalability">Scalability</dt>
+<dd>Capacity grows by adding resources. <strong>Vertical</strong> = a bigger machine (simple, hard ceiling). <strong>Horizontal</strong> = more machines (needs statelessness or partitioning; the default at scale).</dd>
+
+<dt id="availability">Availability (nines)</dt>
+<dd>Fraction of time the system serves requests successfully. 99.9% ≈ 8.8 h/yr down; 99.99% ≈ 52 min/yr; 99.999% ≈ 5 min/yr. Each extra nine roughly 10x's the engineering cost — match to business impact.</dd>
+
+<dt id="latency-throughput">Latency vs throughput</dt>
+<dd><strong>Latency</strong> = time for one request (quote p50/p99, never the mean). <strong>Throughput</strong> = requests completed per second. Independent: batching raises throughput and latency together.</dd>
+
+<dt id="fr-nfr">Functional / non-functional requirement</dt>
+<dd><strong>FR</strong> = what the system does (a testable feature). <strong>NFR</strong> = how well it must do it, stated as a number (SLA/SLO). NFRs dictate architecture; FRs sit on top of it.</dd>
+
+<dt id="modular-monolith">Modular monolith</dt>
+<dd>One deployable unit, internally split by business domain; modules talk only through public APIs and never touch each other's tables. The recommended default before microservices.</dd>
+
+<dt id="conways-law">Conway's Law</dt>
+<dd>A system's structure ends up mirroring the communication structure of the org that built it. Corollary: choosing microservices is also choosing an org shape.</dd>
+
+<dt id="moscow">MoSCoW</dt>
+<dd>Requirement prioritisation: <strong>M</strong>ust / <strong>S</strong>hould / <strong>C</strong>ould / <strong>W</strong>on't-have. Forces explicit scope cuts instead of implicit ones.</dd>
+
+</dl>
+
+<p class="nav"><span><a href="../lessons/0001-cap-pacelc.html">← Lesson 0001: CAP vs PACELC</a></span><span></span></p>
+
+<p class="teacher-note">Something here unclear or seems wrong? Ask your teacher (the agent) — that's what the coaching loop is for.</p>
+</body>
+</html>

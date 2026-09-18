@@ -1,0 +1,163 @@
+/* Shared stylesheet for all System Design Fundamentals lessons.
+   Tufte-inspired: generous margins, readable measure, restrained palette. */
+
+:root {
+  --ink: #1a1a1a;
+  --paper: #fdfcf9;
+  --rule: #d9d4c7;
+  --accent: #7a1f1f;      /* deep red, matches hld-prep rating tables */
+  --muted: #5f5a4e;
+  --code-bg: #f2efe6;
+  --good: #1f5c2e;
+  --bad: #7a1f1f;
+  --measure: 38rem;
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 18px; }
+
+body {
+  margin: 0 auto;
+  padding: 4rem 2rem 8rem;
+  max-width: var(--measure);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Georgia", serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3 { font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: 2rem; margin: 0 0 0.3rem; }
+h2 { font-size: 1.35rem; margin: 2.6rem 0 0.8rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.2rem; }
+h3 { font-size: 1.1rem; margin: 1.8rem 0 0.5rem; color: var(--muted); }
+
+.lesson-meta {
+  font-family: -apple-system, "Helvetica Neue", sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+.mission-tie {
+  font-style: italic;
+  color: var(--muted);
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+}
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+a:hover { border-bottom-color: var(--accent); }
+
+code {
+  background: var(--code-bg);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  font-family: "SF Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 0.85em;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-family: -apple-system, "Helvetica Neue", sans-serif;
+  font-size: 0.88rem;
+}
+th, td { text-align: left; padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { border-bottom: 2px solid var(--ink); font-weight: 600; }
+caption { caption-side: bottom; font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; font-style: italic; }
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.2rem;
+  background: var(--code-bg);
+  border-left: 3px solid var(--rule);
+}
+
+.callout {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.5rem 0;
+}
+.callout .label {
+  font-family: -apple-system, sans-serif;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.primary-source {
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 2rem 0;
+  font-family: -apple-system, sans-serif;
+  font-size: 0.9rem;
+}
+.primary-source .label { font-weight: 700; color: var(--accent); }
+
+.teacher-note {
+  margin: 3rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: -apple-system, sans-serif;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.nav {
+  font-family: -apple-system, sans-serif;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  color: var(--muted);
+}
+
+sup a { border: none; }
+.footnote { font-size: 0.8rem; color: var(--muted); }
+
+/* --- quiz widget (see assets/quiz.js) --- */
+.quiz {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  margin: 1.8rem 0;
+  font-family: -apple-system, "Helvetica Neue", sans-serif;
+}
+.quiz .q { font-weight: 600; margin: 0 0 0.8rem; }
+.quiz button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.8rem;
+  margin: 0.35rem 0;
+  font: inherit;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.quiz button:hover:not(:disabled) { border-color: var(--muted); }
+.quiz button:disabled { cursor: default; opacity: 0.7; }
+.quiz button.right { background: #e5f0e5; border-color: var(--good); color: var(--good); opacity: 1; font-weight: 600; }
+.quiz button.wrong { background: #f5e3e3; border-color: var(--bad); color: var(--bad); }
+.quiz .explain {
+  display: none;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.quiz .explain.show { display: block; }

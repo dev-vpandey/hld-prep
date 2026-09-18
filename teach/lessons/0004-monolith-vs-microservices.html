@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0004 · Monolith → modular monolith → microservices</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script src="../assets/quiz.js"></script>
+</head>
+<body>
+
+<h1>Monolith → modular monolith → microservices</h1>
+<p class="lesson-meta">Lesson 0004 · System Design Fundamentals · Section 1 · ~7 min</p>
+
+<p class="mission-tie">Mission tie-in: at Staff level the interesting answer is almost never "microservices" reflexively. It's knowing <em>when</em> the split pays for itself and what it costs — the operational tax, the consistency problem, Conway's Law. Reflexive microservices is a downlevel tell.</p>
+
+<h2>1. The three points on the spectrum</h2>
+<table>
+<tr><th>Aspect</th><th>Monolith</th><th>Modular monolith</th><th>Microservices</th></tr>
+<tr><td>Deploy unit</td><td>One</td><td>One</td><td>Many, independent</td></tr>
+<tr><td>Coupling</td><td>Tight everywhere</td><td>Loose modules, coupled deploy</td><td>Loose everywhere</td></tr>
+<tr><td>Scaling</td><td>Whole app</td><td>Whole app</td><td>Per service</td></tr>
+<tr><td>Data</td><td>Shared DB</td><td>Shared DB, module owns its tables</td><td>DB per service</td></tr>
+<tr><td>Ops complexity</td><td>Low</td><td>Low–medium</td><td>High (tracing, discovery, deploy orchestration)</td></tr>
+<tr><td>Failure blast radius</td><td>Whole app</td><td>Whole app</td><td>Ideally one service</td></tr>
+<caption>Source: Educative GSD Fundamentals — "Monolithic and Microservices Architecture".</caption>
+</table>
+
+<h2>2. The modular-monolith discipline</h2>
+<p>A modular monolith is one deployable, but internally split by business domain, modules talking only through public APIs.</p>
+<blockquote>"One module should never directly query another module's database tables — it must always go through its public API."</blockquote>
+<p>This is the cheap 80%: you get domain boundaries and team ownership without the network, without distributed transactions, without a tracing stack. And it's the clean extraction path if a module later needs to become a service.</p>
+
+<h2>3. What microservices actually cost</h2>
+<ul>
+<li><strong>Network reliability</strong> — every in-process call becomes a fallible RPC needing timeouts, retries, circuit breakers.</li>
+<li><strong>Data consistency</strong> — no cross-service transaction; you're now in eventual-consistency / saga territory (<a href="0001-cap-pacelc.html">Lesson 0001</a>'s trade-offs, per call).</li>
+<li><strong>Operational overhead</strong> — service discovery, API gateway, distributed tracing, per-service CI/CD, on-call for N services.</li>
+</ul>
+<blockquote>"Adopting microservices too early can cripple a startup with operational overhead before it even finds product-market fit."</blockquote>
+
+<h2>4. The selection framework</h2>
+<div class="callout">
+<span class="label">Decide on</span>
+<strong>Team size &amp; structure</strong> (Conway's Law — your services will mirror your org chart) · <strong>business stage</strong> (early = iterate fast = monolith) · <strong>divergent scaling needs</strong> across features (favours the split) · <strong>operational maturity</strong> (no tracing/discovery expertise → the tax outweighs the benefit).
+</div>
+<p>Default recommendation to give in an interview: <strong>start with a well-structured modular monolith, extract services only where scaling or deploy-cadence needs genuinely diverge.</strong></p>
+
+<div class="quiz" data-answer="2">
+  <p class="q">A 12-person startup, pre-PMF, one product, uniform load. Interviewer asks how you'd structure the backend. Best answer?</p>
+  <button>Microservices from day one so scaling is never a future migration</button>
+  <button>Pure monolith with no internal boundaries — speed is all that matters now</button>
+  <button>Modular monolith — domain boundaries now, service extraction later if needed</button>
+  <div class="explain">Microservices impose an operational tax this team can't absorb pre-PMF and gains them nothing with uniform load. A boundary-less monolith rots. The modular monolith keeps iteration speed while preserving a clean extraction path.</div>
+</div>
+
+<div class="primary-source">
+<span class="label">Read this next (primary source):</span>
+<a href="https://martinfowler.com/bliki/MonolithFirst.html">Martin Fowler — "MonolithFirst"</a> and <a href="https://martinfowler.com/bliki/MicroservicePremium.html">"Microservice Premium"</a>. ~15 min combined. The canonical case for not starting distributed.
+</div>
+
+<h2>Recall</h2>
+<div class="quiz" data-answer="0">
+  <p class="q">Which cost is unique to microservices, not modular monoliths?</p>
+  <button>Cross-service calls can fail on the network and need timeouts/retries</button>
+  <button>Modules must communicate through public APIs, not shared tables</button>
+  <button>Business logic has to be organised around domain boundaries</button>
+  <div class="explain">API-only communication and domain boundaries apply to modular monoliths too. The network — partial failure between services — is the tax you only pay once calls cross a process boundary.</div>
+</div>
+
+<p class="teacher-note">Ask your teacher (the agent) about Conway's Law or sagas if you want them drilled now. Next: <a href="0005-functional-vs-nonfunctional-requirements.html">Lesson 0005 — functional vs non-functional requirements</a>, which feeds straight into the hld-prep Phase 2 checklist.</p>
+
+<p class="nav"><span><a href="0003-system-design-vs-architecture.html">← 0003</a></span><span><a href="0005-functional-vs-nonfunctional-requirements.html">0005 →</a></span></p>
+
+</body>
+</html>

@@ -1,3 +1,7 @@
+> **SUPERSEDED 2026-09-11** — replaced by
+> `~/Java_Projects/interview-prep/ROADMAP.md` (Staff/Principal Prep Roadmap,
+> Sept–Dec 2026). This file is kept for reference only.
+
 # MAANG Prep Plan — HLD + DSA Integration
 
 **Target:** Staff Engineer at MAANG · **Timeline:** 4 months (~17 weeks) · **Start:** 2026-04-11

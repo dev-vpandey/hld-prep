@@ -40,10 +40,18 @@ event sourcing, event log, replay                              → § EVENT SOUR
 
 ## G5 · Distributed Systems  (cheatsheet-g5-distributed.md)
 cap theorem, consistency availability partition                → § CAP
+pacelc, pa/el, pc/ec, latency vs consistency, else branch      → § PACELC THEOREM
+quorum, n/w/r, read quorum, write quorum, hinted handoff, read repair, w+r>n → § QUORUM (N/W/R)
 consistency models, strong, eventual, linearizable, causal     → § CONSISTENCY MODELS
 consensus, raft, paxos, leader election                        → § CONSENSUS
+fencing token, stale leader, zombie leader, split-brain prevention → § FENCING TOKENS
+coordination primitives, zookeeper, etcd, znode, watch, ephemeral key, distributed lock, service discovery, quorum, leader failure mid-broadcast → § COORDINATION PRIMITIVES (ZOOKEEPER / ETCD)
 distributed transactions, 2pc, saga, outbox pattern            → § DISTRIBUTED TRANSACTIONS
-clock, vector clock, lamport, ntp skew                         → § CLOCKS
+clock, lamport, monotonic, ntp skew, hlc                       → § CLOCKS
+vector clock, version vector, sibling, reconciliation, happens-before, concurrent writes → § VECTOR CLOCKS (DEEP DIVE)
+event ordering, total order, partial order, causal order, happens-before relation → § EVENT ORDERING MODELS (DEEP DIVE)
+read-your-writes, monotonic reads, monotonic writes, writes-follow-reads, session guarantee → § SESSION / CLIENT-CENTRIC GUARANTEES
+global state, consistent snapshot, distributed snapshot, chandy-lamport, marker, cut, checkpoint → § GLOBAL STATE / SNAPSHOTS
 circuit breaker, retry, timeout, bulkhead                      → § RESILIENCE PATTERNS
 
 ## G6 · Scale & Infrastructure  (cheatsheet-g6-scale.md)

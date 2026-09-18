@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0003 · System design vs software architecture</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script src="../assets/quiz.js"></script>
+</head>
+<body>
+
+<h1>System design vs software architecture</h1>
+<p class="lesson-meta">Lesson 0003 · System Design Fundamentals · Section 1 · ~5 min</p>
+
+<p class="mission-tie">Mission tie-in: Staff interviews live at the seam between these two. If you stay in "architecture" (how the code is layered) when asked a "system design" question (how photos reach 10M users with low latency), you've misread the question — a classic downlevel signal.</p>
+
+<h2>1. Scope, not quality</h2>
+<table>
+<tr><th></th><th>Software architecture</th><th>System design</th></tr>
+<tr><td>Scope</td><td>Inside one application / service</td><td>Across applications, data stores, network, infrastructure</td></tr>
+<tr><td>Decides</td><td>Layering, module boundaries, dependencies, patterns (MVC, hexagonal)</td><td>Where data lives, how it's replicated/sharded, how the system scales and stays available globally</td></tr>
+<tr><td>Optimises for</td><td>Maintainability, testability, developer velocity</td><td>Scalability, availability, latency, consistency</td></tr>
+<tr><td>Example question</td><td>How is auth code structured? Which framework?</td><td>How do we serve photos globally under 100&nbsp;ms? Which store per data type?</td></tr>
+<caption>Architecture is a subset of system design — the part that lives within a process boundary. Source: Educative GSD Fundamentals; <a href="https://martinfowler.com/architecture/">Fowler, "Software Architecture Guide"</a>.</caption>
+</table>
+
+<h2>2. The seam: choices propagate both ways</h2>
+<ul>
+<li><strong>Architecture → system design:</strong> choosing microservices <em>creates</em> system-design work — service discovery, an API gateway, inter-service transport, distributed tracing.</li>
+<li><strong>System design → architecture:</strong> a hard p99 latency budget pushes you toward a leaner internal design — fewer hops, in-process caching, no chatty ORMs.</li>
+</ul>
+
+<div class="quiz" data-answer="0">
+  <p class="q">"Should we use keyset pagination or offset pagination in this endpoint?" is primarily a question of…</p>
+  <button>Software architecture — internal structure of one service's data access</button>
+  <button>System design — cross-service infrastructure and global scale</button>
+  <button>Neither — it is a pure product decision with no engineering weight</button>
+  <div class="explain">Pagination strategy is an internal API/data-access design choice within a single service: architecture. It becomes a system-design concern only when it drives sharding or cross-service contracts.</div>
+</div>
+
+<h2>3. Why the distinction earns points</h2>
+<div class="callout">
+<span class="label">Interview move</span>
+When asked a design question, explicitly say: "I'll treat the internal service structure as an implementation detail and focus on the cross-system concerns — storage, replication, scale, failure." This signals you know which altitude the question is at.
+</div>
+
+<div class="primary-source">
+<span class="label">Read this next (primary source):</span>
+<a href="https://martinfowler.com/architecture/">Martin Fowler — "Software Architecture Guide"</a>. ~12 min. Fowler's take on what "architecture" means and why the boundary is fuzzy but useful.
+</div>
+
+<h2>Recall</h2>
+<div class="quiz" data-answer="1">
+  <p class="q">Which pairing is right?</p>
+  <button>Architecture → scalability & availability; system design → maintainability</button>
+  <button>Architecture → maintainability & velocity; system design → scale & availability</button>
+  <button>Both disciplines optimise for exactly the same set of qualities</button>
+  <div class="explain">Architecture is judged on how easy the code is to change and test; system design is judged on how the deployed system holds up at scale and under failure. They influence each other but grade differently.</div>
+</div>
+
+<p class="teacher-note">Ask your teacher (the agent) if the seam still feels blurry. Next: <a href="0004-monolith-vs-microservices.html">Lesson 0004 — monolith vs modular monolith vs microservices</a>.</p>
+
+<p class="nav"><span><a href="0002-what-is-system-design.html">← 0002</a></span><span><a href="0004-monolith-vs-microservices.html">0004 →</a></span></p>
+
+</body>
+</html>

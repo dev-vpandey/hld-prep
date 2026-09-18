@@ -10,6 +10,21 @@ Revision and SRS logic are handled separately via /review-hld — never mix the 
 - Language background: Java, strong DSA
 - Focus: scale, failure modes, trade-off reasoning
 
+## Explain Mode
+When I ask you to explain a topic/concept/chapter (not run a design session), always default to ELI5 style:
+- Plain words first, jargon introduced only after the plain-word version
+- One concrete everyday analogy per concept
+- Short worked example or dry run
+- A pictorial representation (ASCII diagram) wherever the concept can be drawn — timelines, message flows, state transitions, cuts, box-and-arrow layouts. The picture and the prose explanation go hand in hand: always keep both — draw the diagram AND walk through it in words. Never replace the written explanation with a diagram alone.
+- End with "the one sentence to remember" + where it's used in practice
+This overrides caveman intensity for explanation answers. The Phase 1–8 coach flow still applies only when I give a system design question.
+
+### Save as Note
+Once I confirm an explanation is good (e.g. "sounds good", "that's correct", "good cheatsheet"), always offer to save it as a note — don't wait to be asked again on future explanation threads.
+- Summarize the *entire* explanation conversation (all turns on that topic, not just the last message) into one Markdown file, keeping all ASCII diagrams, tables, and worked examples intact — no lossy compression of the pictorial parts.
+- Save to `notes/explanations/[topic-slug].md`, with a header noting the save date and linking to any related cheatsheet file(s) via `@notes/cheatsheets/...`.
+- This is separate from the Design Card flow (Phase 8) — explanation notes are reference material, not SRS-tracked design cards, and are not added to @notes/REVIEW.md.
+
 ## Design Card Template
 - When saving a solved design, use @templates/hld-design-card.md
 - Append a row to @notes/REVIEW.md: | [file] | [System] | [Tag] | [Stage] | [Review Date] | — | 0 | No |

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0002 · What system design actually is (and what the interview tests)</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script src="../assets/quiz.js"></script>
+</head>
+<body>
+
+<h1>What system design is</h1>
+<p class="lesson-meta">Lesson 0002 · System Design Fundamentals · Section 1 · ~5 min</p>
+
+<p class="mission-tie">Mission tie-in: this is the frame the whole MAANG loop runs on. If you can't say in one sentence what the interviewer is grading, you'll spend 45 minutes drawing boxes and score a "no hire". This lesson fixes the frame.</p>
+
+<h2>1. The definition worth memorising</h2>
+<p>System design is choosing the <strong>building blocks</strong> a system is made of (clients, load balancers, services, caches, databases, queues, CDNs), deciding <strong>how they interact</strong>, and predicting <strong>how the whole thing behaves under real-world stress</strong> — load spikes, node failures, network partitions, bad deploys — then accepting the <strong>trade-offs</strong> that behaviour forces.<sup><a href="#fn1">1</a></sup></p>
+
+<p>Contrast with coding:</p>
+<table>
+<tr><th></th><th>Coding asks</th><th>System design asks</th></tr>
+<tr><td>Question</td><td>How do I implement this correctly?</td><td>How does it stay correct, fast and available under stress?</td></tr>
+<tr><td>Unit</td><td>Functions, classes, algorithms</td><td>Services, APIs, data stores, infrastructure</td></tr>
+<tr><td>Failure looks like</td><td>Wrong output</td><td>Correct output that arrives too late, or not at all, for some users</td></tr>
+</table>
+
+<h2>2. The four qualities everything trades against</h2>
+<p>Almost every design decision is bought with one of these and paid for with another:</p>
+<ul>
+<li><strong>Scalability</strong> — capacity grows by adding machines, not by praying.</li>
+<li><strong>Availability</strong> — keeps answering when components die.</li>
+<li><strong>Latency</strong> — answers fast, everywhere in the world.</li>
+<li><strong>Consistency</strong> — every reader sees correct, agreed-upon data.</li>
+</ul>
+<p>You met the sharpest version of the last two in <a href="0001-cap-pacelc.html">Lesson 0001</a>: consistency is routinely traded for latency (PACELC's "else" branch) and for availability (during partitions).</p>
+
+<h2>3. What the interviewer is actually grading</h2>
+<div class="callout">
+<span class="label">The real rubric</span>
+Not "did you name Kafka." It's: <strong>did you scope the problem, quantify the load, justify each component against the alternative, and name the failure modes and trade-offs before being asked.</strong> That last clause is the Senior→Staff line.
+</div>
+
+<div class="quiz" data-answer="1">
+  <p class="q">A candidate produces a clean architecture diagram in 10 minutes and stops. Most likely Staff-loop outcome?</p>
+  <button>Strong hire — efficient and complete under time pressure</button>
+  <button>Weak — breadth without depth, no load math or failure analysis</button>
+  <button>Neutral — depends entirely on which datastore was chosen</button>
+  <div class="explain">A diagram is table stakes. The signal lives in estimation, per-component justification, and unprompted failure-mode / trade-off reasoning. Finishing early usually means the depth pass never happened.</div>
+</div>
+
+<div class="primary-source">
+<span class="label">Read this next (primary source):</span>
+<a href="https://dataintensive.net/">Kleppmann, <em>Designing Data-Intensive Applications</em></a>, Chapter 1 — "Reliable, Scalable, and Maintainable Applications". ~30 min. It defines the exact qualities above with precision you can quote in an interview.
+</div>
+
+<h2>Recall</h2>
+<div class="quiz" data-answer="2">
+  <p class="q">Which best separates system design from coding?</p>
+  <button>System design uses diagrams; coding uses a text editor and tests</button>
+  <button>System design is for seniors; coding is for junior engineers</button>
+  <button>Coding targets correct output; design targets behaviour under stress</button>
+  <div class="explain">The distinction is the failure model, not the tools or the seniority. Design work is about what happens at 10x load, on node loss, and during a partition — while still returning correct answers.</div>
+</div>
+
+<p class="teacher-note">Questions? Ask your teacher (the agent). Next: <a href="0003-system-design-vs-architecture.html">Lesson 0003 — system design vs software architecture</a> (why they're not the same scope, and why interviewers probe the seam).</p>
+
+<hr>
+<p class="footnote" id="fn1">1. Educative, <em>Grokking the Fundamentals of System Design</em> — "What Is System Design?". Netflix's 2024 live-boxing stream buckling under concurrent load is the lesson's cautionary example of design, not code, failing.</p>
+
+<p class="nav"><span><a href="0001-cap-pacelc.html">← 0001 CAP vs PACELC</a></span><span><a href="0003-system-design-vs-architecture.html">0003 →</a></span></p>
+
+</body>
+</html>

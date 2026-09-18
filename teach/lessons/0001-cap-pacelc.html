@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0001 · CAP vs PACELC — the trade-off, stated precisely</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script src="../assets/quiz.js"></script>
+</head>
+<body>
+
+<h1>CAP vs PACELC</h1>
+<p class="lesson-meta">Lesson 0001 · System Design Fundamentals · Section 2 · ~8 min</p>
+
+<p class="mission-tie">Mission tie-in: at a MAANG Staff loop, "we'll use Cassandra / DynamoDB / Spanner here" is only worth points if you can say <em>what that buys and what it costs</em>. CAP and PACELC are the vocabulary for that sentence. This lesson makes you use them precisely — not as slogans.</p>
+
+<h2>1. The one-sentence version</h2>
+<p>A distributed data store cannot make network partitions disappear, so its designers have already chosen — for you — how it behaves when one happens, <em>and</em> how much latency it spends on consistency the rest of the time. Your job in an interview is to name that choice out loud and defend it for the workload.</p>
+
+<h2>2. CAP, stated so it's actually true</h2>
+<p>The popular phrasing — "pick 2 of Consistency, Availability, Partition-tolerance" — is misleading and interviewers notice.<sup><a href="#fn1">1</a></sup> Partitions are not a property you opt into; packet loss happens. So <strong>P is not on the menu</strong>. The real statement:</p>
+
+<blockquote>When a <a href="../reference/glossary.html#partition">network partition</a> occurs, you must choose between <a href="../reference/glossary.html#consistency-cap">Consistency</a> (linearizability) and <a href="../reference/glossary.html#availability-cap">Availability</a> for the affected data. When there is no partition, CAP says nothing at all.</blockquote>
+
+<p>Precise definitions matter here — they're in the <a href="../reference/glossary.html">glossary</a>:</p>
+<ul>
+<li><strong>Consistency</strong> = linearizability: a read never returns a value older than a write that already completed.</li>
+<li><strong>Availability</strong> = every request to a live node eventually gets a non-error answer. Latency is not part of it.</li>
+</ul>
+
+<h3>What the choice looks like during a partition</h3>
+<table>
+<tr><th>Choice</th><th>Behaviour on the minority side</th><th>Client-visible effect</th></tr>
+<tr><td><strong>CP</strong> (choose consistency)</td><td>Refuse writes (and often reads) it can't confirm</td><td>Errors / timeouts until the partition heals. No wrong answers.</td></tr>
+<tr><td><strong>AP</strong> (choose availability)</td><td>Keep accepting reads and writes locally</td><td>Requests succeed, but reads may be stale and concurrent writes may conflict and need later reconciliation.</td></tr>
+</table>
+
+<div class="quiz" data-answer="1">
+  <p class="q">During a partition, a CP store's minority-side node receives a write. What does a correct client see?</p>
+  <button>A stale but successfully returned previous value</button>
+  <button>An error or timeout rather than a response</button>
+  <button>A success ack that later silently rolls back</button>
+  <div class="explain">CP protects linearizability by declining what it cannot confirm. It returns an error — it does not serve stale data and does not fake a success. "No answer" is acceptable under CAP; "wrong answer" is not.</div>
+</div>
+
+<h2>3. PACELC — the half CAP ignores</h2>
+<p>CAP only speaks about the partition case, which is rare. PACELC adds the common case:<sup><a href="#fn2">2</a></sup></p>
+
+<blockquote><strong>P</strong>artition? → trade <strong>A</strong>vailability vs <strong>C</strong>onsistency.&nbsp;&nbsp; <strong>E</strong>lse (normal operation) → trade <strong>L</strong>atency vs <strong>C</strong>onsistency.</blockquote>
+
+<p>The "else" clause is the insight: keeping replicas linearizable means a write must reach a quorum (or the leader must wait for acks) <em>on every single write</em>, partition or not. That is latency you pay all day. A store that replicates asynchronously answers faster but can serve stale reads even when the network is perfectly healthy.</p>
+
+<table>
+<tr><th>System</th><th>PACELC</th><th>Reading</th></tr>
+<tr><td>DynamoDB / Cassandra (default)</td><td>PA / EL</td><td>Stays up during partitions; fast in normal operation; both bought with eventual consistency.</td></tr>
+<tr><td>Spanner</td><td>PC / EC</td><td>Refuses rather than diverge during partitions; spends latency (TrueTime waits) on consistency always.</td></tr>
+<tr><td>MongoDB (default majority)</td><td>PC / EC</td><td>Leader-based; minority side can't elect, so it blocks; waits for majority acks normally.</td></tr>
+<tr><td>PostgreSQL single-primary + async replica</td><td>PC / EL</td><td>One primary so no divergence; async replica reads can be stale with no partition.</td></tr>
+<caption>Classifications follow Abadi's PACELC write-up; real systems are tunable per-request, so treat these as the default posture, not a fixed identity.</caption>
+</table>
+
+<div class="quiz" data-answer="2">
+  <p class="q">Your feature needs single-digit-millisecond writes and can tolerate a reader occasionally seeing a value 50&nbsp;ms old. Which posture fits?</p>
+  <button>PC / EC, because correctness always beats speed</button>
+  <button>PA / EC, because partitions are the main worry</button>
+  <button>PA / EL, because you traded consistency for latency</button>
+  <div class="explain">You explicitly accepted staleness and demanded low latency — that is the EL choice, and taking availability during partitions too (PA) is consistent with it. A PC/EC store like Spanner would add coordination latency you said you can't afford.</div>
+</div>
+
+<h2>4. How to say it in the room</h2>
+<div class="callout">
+<span class="label">Template sentence</span>
+"This path is <em>[read-heavy / write-heavy]</em> and can tolerate <em>[X ms]</em> of staleness, so I'll pick an <strong>EL</strong> store and take <strong>PA</strong> during partitions — I'd rather serve a slightly stale timeline than 500 the user. For the <em>[payments / inventory]</em> path I flip to <strong>PC/EC</strong> and accept the write-latency and the partition-time unavailability, because a double-charge is unrecoverable."
+</div>
+<p>Two things that move you from Senior to Staff here: (1) you split the system — different paths get different postures; (2) you name the <em>cost</em> of your choice unprompted, not just the benefit.</p>
+
+<div class="primary-source">
+<span class="label">Read this next (primary source):</span>
+<a href="https://martin.kleppmann.com/2015/05/11/please-stop-calling-databases-cp-or-ap.html">Martin Kleppmann — "Please stop calling databases CP or AP" (2015)</a>. 15 minutes. It sharpens exactly why the definitions above are so narrow, and why a single label per database is a lie. Then skim <a href="https://dbmsmusings.blogspot.com/2010/04/problems-with-cap-and-yahoos-little.html">Abadi's PACELC note</a>.
+</div>
+
+<h2>Recall (do this from memory, no scrolling)</h2>
+<div class="quiz" data-answer="0">
+  <p class="q">Which statement about CAP is correct?</p>
+  <button>When unpartitioned, CAP constrains nothing about the system</button>
+  <button>A system can be engineered to avoid partitions entirely</button>
+  <button>Availability in CAP requires responses within a latency bound</button>
+  <div class="explain">CAP is silent absent a partition (that's what PACELC's "else" covers), partitions can't be designed away, and CAP-availability has no latency requirement — only "eventually a non-error response".</div>
+</div>
+
+<p class="teacher-note">Stuck on any of this, or want a scenario drilled? Ask your teacher (the agent). Next lesson: <strong>consistency models</strong> — linearizable vs causal vs read-your-writes vs eventual, by their client-visible effects. That's the vocabulary that makes the "C" in this lesson concrete.</p>
+
+<hr>
+<p class="footnote" id="fn1">1. Eric Brewer, "CAP Twelve Years Later: How the 'Rules' Have Changed", IEEE Computer, 2012 — Brewer's own retreat from the "2 of 3" framing.</p>
+<p class="footnote" id="fn2">2. Daniel Abadi, "Problems with CAP, and Yahoo's little known NoSQL system", 2010 — introduces PACELC.</p>
+
+<p class="nav"><span>◆ first lesson</span><span><a href="../reference/glossary.html">Glossary →</a></span></p>
+
+</body>
+</html>

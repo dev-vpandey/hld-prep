@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>0005 · Functional vs non-functional requirements</title>
+<link rel="stylesheet" href="../assets/course.css">
+<script src="../assets/quiz.js"></script>
+</head>
+<body>
+
+<h1>Functional vs non-functional requirements</h1>
+<p class="lesson-meta">Lesson 0005 · System Design Fundamentals · Section 1 · ~6 min</p>
+
+<p class="mission-tie">Mission tie-in: this is hld-prep Phase 2, verbatim. Your coach checks four axes — functional requirements, scale numbers, latency/availability SLA, consistency model. This lesson is the theory behind that checklist and the vocabulary to nail it fast so you spend interview minutes on depth, not scoping.</p>
+
+<h2>1. The split</h2>
+<table>
+<tr><th></th><th>Functional (FR)</th><th>Non-functional (NFR)</th></tr>
+<tr><td>Answers</td><td>What must the system <em>do</em>?</td><td>How <em>well</em> must it do it?</td></tr>
+<tr><td>Form</td><td>"User can send a message to a group"</td><td>"p99 send latency &lt; 200&nbsp;ms; 99.99% availability"</td></tr>
+<tr><td>Testable by</td><td>Does the feature work? (objective)</td><td>Measured against a number (SLA/SLO)</td></tr>
+<tr><td>Design impact</td><td>Features built <em>on</em> the architecture</td><td>Requirements that <em>dictate</em> the architecture</td></tr>
+<caption>Source: Educative GSD Fundamentals — "Functional vs. Non-Functional Requirements".</caption>
+</table>
+<p>Key asymmetry: <strong>NFRs shape the architecture more than FRs do.</strong> "Send a message" is a row in a table. "99.999% available" forces multi-region redundancy, failover, and the CAP choice from <a href="0001-cap-pacelc.html">Lesson 0001</a>.</p>
+
+<h2>2. Make every requirement measurable</h2>
+<p>Vague requirements are worthless. Replace adjectives with numbers:</p>
+<ul>
+<li>✗ "The system should be user-friendly / fast / reliable."</li>
+<li>✓ "Users can undo a message deletion within 10 seconds."</li>
+<li>✓ "Payment authorisation completes in under 1 second at p99."</li>
+</ul>
+
+<h3>The NFR checklist to run in every interview</h3>
+<table>
+<tr><th>Axis</th><th>Question to ask out loud</th></tr>
+<tr><td>Scalability</td><td>DAU? peak QPS? growth rate?</td></tr>
+<tr><td>Availability</td><td>How many nines? what's the cost of downtime?</td></tr>
+<tr><td>Latency</td><td>p99 read? p99 write? acceptable staleness?</td></tr>
+<tr><td>Throughput</td><td>writes/s and reads/s at peak?</td></tr>
+<tr><td>Consistency</td><td>which operations need strong, which tolerate eventual?</td></tr>
+<tr><td>Durability</td><td>is any data loss acceptable? RPO?</td></tr>
+</table>
+
+<h2>3. Requirements conflict — on purpose</h2>
+<blockquote>"Strong database consistency introduces latency, as the system must coordinate across nodes to guarantee the most recent data is served."</blockquote>
+<p>That's PACELC's "else" branch again. Perfect systems don't exist; the job is to choose. Two tools:</p>
+<ul>
+<li><strong>MoSCoW</strong> — Must / Should / Could / Won't-have. Forces explicit scope cuts.</li>
+<li><strong>Don't over-target</strong> — 99.999% instead of 99.9% is ~50x tighter and can multiply cost. Match the number to the business, not to ego.</li>
+</ul>
+
+<div class="quiz" data-answer="1">
+  <p class="q">"Checkout completes within 2 seconds" is which kind of requirement?</p>
+  <button>Functional — it describes the checkout capability the system offers</button>
+  <button>Non-functional — it's a measurable performance quality of a feature</button>
+  <button>Neither — latency targets are product goals, not engineering requirements</button>
+  <div class="explain">The capability is "user can check out" (FR). The "within 2 seconds" clause is a latency quality bound on that capability — a non-functional requirement, and it's exactly the kind that drives caching and datastore choices.</div>
+</div>
+
+<div class="primary-source">
+<span class="label">Read this next (primary source):</span>
+<a href="https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery">Hello Interview — "Delivery Framework" (requirements section)</a>. ~10 min. Ex-MAANG interviewers on scoping FR/NFR fast under time pressure — directly calibrated to the loop.
+</div>
+
+<h2>Recall (interleaved — pulls in earlier lessons)</h2>
+<div class="quiz" data-answer="2">
+  <p class="q">An NFR says "reads may be up to 1 s stale, but p99 read latency must be &lt; 20 ms." This points you toward…</p>
+  <button>A linearizable store; the staleness budget is irrelevant to the choice</button>
+  <button>A CP / EC store, since the latency number is the binding constraint</button>
+  <button>An EL store — you were handed a staleness budget to spend on speed</button>
+  <div class="explain">The requirement explicitly trades consistency for latency: staleness is allowed, latency is tight. That's PACELC's "Else → Latency" (EL) posture from Lesson 0001. A linearizable/EC store spends coordination latency you were told not to spend.</div>
+</div>
+
+<p class="teacher-note">Ask your teacher (the agent) to run a mock Phase-2 scoping drill on any system if you want reps. This completes <strong>Section 1</strong>. Next: <strong>Section 2 — Distributed System Fundamentals</strong>, starting with "Time in Distributed Systems". See the <a href="../reference/glossary.html">glossary</a> for the running term list.</p>
+
+<p class="nav"><span><a href="0004-monolith-vs-microservices.html">← 0004</a></span><span><a href="../reference/glossary.html">Glossary →</a></span></p>
+
+</body>
+</html>
