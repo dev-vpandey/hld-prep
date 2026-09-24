@@ -1,0 +1,172 @@
+{
+  "availability-fault-tolerance-distributed-systems.md": [
+    {
+      "sceneIndex": 0,
+      "sha256": "2670ddb466687c89f7fbdb2f44dae25e9830271c2bb5fb9ac8617de7423e6445"
+    },
+    {
+      "sceneIndex": 1,
+      "sha256": "f0f1bf3d13bf63b1932d6f8c94e5129c97751e7f6918058da11714e88241fda2"
+    },
+    {
+      "sceneIndex": 2,
+      "sha256": "03e066ec8067790af025662e1b941e5fa85bd67d34dd9587cdf5d516fb061c9d"
+    },
+    {
+      "sceneIndex": 3,
+      "sha256": "e5532e1b26ddd4d01cea1e929bf0fecbbd0fc448d61a1fd284fd3f224d3df0a4"
+    },
+    {
+      "sceneIndex": 4,
+      "sha256": "0f8099741cdba50205c515427039a01d6c34fc68e90c2ffd375b5f32c015d74f"
+    },
+    {
+      "sceneIndex": 5,
+      "sha256": "ca9bd8b74824f067cac91f761ec7169154f2427d2a21773911af7f82cdeb5fc7"
+    },
+    {
+      "sceneIndex": 6,
+      "sha256": "1a82f84992afd8885e808f46db9175055a1e4b88af2f5b29c1902464c2293d6d"
+    },
+    {
+      "sceneIndex": 7,
+      "sha256": "aeee4cd6e6c9e199ae71fdc7693f7379e9b519c343bff387b7997685309dc565"
+    },
+    {
+      "sceneIndex": 8,
+      "sha256": "df58106f4f3c78fb92b027d7cd745b7144d874a51cc2b645eed6cbfff0b877ba"
+    },
+    {
+      "sceneIndex": 9,
+      "sha256": "0c5a0f5317f4f83cff2445707c2fcda014f8fc823f69db3ee23788570c7ebd27"
+    },
+    {
+      "sceneIndex": 10,
+      "sha256": "7d16d3841243f6e11d32ca3dff1e90a2ad76020f1e4a4174802edaae96e2d32f"
+    },
+    {
+      "sceneIndex": 11,
+      "sha256": "d915e6a4ec7fda4b1d04c3b69bd2e60f1b2fee9197e99a24353406efaee2cd53"
+    }
+  ],
+  "cap-pacelc-quorum.md": [
+    {
+      "sceneIndex": 0,
+      "sha256": "70b084e4ab2262bbc514e2845c99a6fae8896cdd152c545c5bca9bfa079af74b"
+    },
+    {
+      "sceneIndex": 1,
+      "sha256": "d9da90c3e8a98dbcaec43df9b539826fe60ce27f99f9a9aadeec463f956f173b"
+    },
+    {
+      "sceneIndex": 2,
+      "sha256": "16e4570970dfae6485b3eddb9352409d6f4b855037803790e08116be098a23d5"
+    },
+    {
+      "sceneIndex": 3,
+      "sha256": "edf6e9afb7d65cbe5df073128b3ea2786bd7250d0224c18ee634075b1a918b0f"
+    },
+    {
+      "sceneIndex": 4,
+      "sha256": "13fae880ee72cbda299a161239e6e73dad9b974a36d68f622b71aba1988d38d9"
+    },
+    {
+      "sceneIndex": 5,
+      "sha256": "8202ee07d1034c2abd844d94c0e58969d59049d12722f8022796a12024dc7fa1"
+    },
+    {
+      "sceneIndex": 6,
+      "sha256": "cb0163bbb5be0b1a155dc3b9d325196a1b8a9a13b405ee048cf98dd338ca382a"
+    },
+    {
+      "sceneIndex": 7,
+      "sha256": "f010d496580985c4422a7efaf57d1d43f053bb9b76ca35094975814ae037627d"
+    },
+    {
+      "sceneIndex": 8,
+      "sha256": "f494d5074abe6b79bef4ff2ce1d9569484bbe70e56301caa26e5e8f7f9bc1c3d"
+    },
+    {
+      "sceneIndex": 9,
+      "sha256": "baa00151853149ff1f7be465fb4236ba2e30bf8dc420cffbccd7d1a24681f610"
+    },
+    {
+      "sceneIndex": 10,
+      "sha256": "d13f233f1032f89aea57df457cb7ae80ca8562d9451e76768228b886b8a6e4e4"
+    },
+    {
+      "sceneIndex": 11,
+      "sha256": "1dab153e8b59ff240f3bd26620be30f96044b11df9f7a00579c2d6cd19b34d98"
+    }
+  ],
+  "concurrency-vs-parallelism.md": [
+    {
+      "sceneIndex": 0,
+      "sha256": "b17192cc8d11f98f03caad910a40c3f5f466e9b22bea3bdb4e0e70652bc5f851"
+    },
+    {
+      "sceneIndex": 1,
+      "sha256": "4eb93b710fd719ce960a79a8c489a106cb0b03d8f32d80e22ad7c69d37ad8973"
+    },
+    {
+      "sceneIndex": 2,
+      "sha256": "fc1b6fcb2f16d1d68879e5d1fa8fd42f6b2b3b4ef02ac254af05513197b62e50"
+    },
+    {
+      "sceneIndex": 3,
+      "sha256": "adedd49b510012fa84e5289c0b800e6343068d18a01ddefe79de578779ffb852"
+    },
+    {
+      "sceneIndex": 4,
+      "sha256": "aeb77d3538d225fb51e5681ecfd14b724c668653e26795b9ae64f511959616a1"
+    },
+    {
+      "sceneIndex": 5,
+      "sha256": "33f2200b9edbf561b4d34b04007b408228cd93d83deca0707901fd3c019d8d78"
+    },
+    {
+      "sceneIndex": 6,
+      "sha256": "856ebb20c730202c39f021246f348bc08e70104823a862b909eb30c2c33dfe08"
+    }
+  ],
+  "processes-vs-threads.md": [
+    {
+      "sceneIndex": 0,
+      "sha256": "c338ad84d41a0ca5fa5f9d10f05ef6654811481bb4f40d3ca458952179a2e9f9"
+    },
+    {
+      "sceneIndex": 1,
+      "sha256": "9cb66a3b8a7d039ec5154f756b310b48c79826cd7ebcc8874003c2c341a1c4e8"
+    },
+    {
+      "sceneIndex": 2,
+      "sha256": "b0fe3978a036c62d84542607270409f67a48892ac03f115eab55cdd49c29d7d0"
+    }
+  ],
+  "types-of-failures-distributed-systems.md": [
+    {
+      "sceneIndex": 0,
+      "sha256": "9584930c405ef57fbc301a0dd2d88c79e1399c7bea25a9ce3b165bfc8365a6bc"
+    },
+    {
+      "sceneIndex": 1,
+      "sha256": "68b6db8b9c4515b7ec54a450a9f641b5c98242d98bafd4c79a3b941d9ff4c490"
+    },
+    {
+      "sceneIndex": 2,
+      "sha256": "429d5244b8da86a2126cec30480fb1df5970aca341b951f0dcf55735dd4ad6b4"
+    },
+    {
+      "sceneIndex": 3,
+      "sha256": "e2cec878d9ce9cc5d864af6b1daaedc11f27aba0628d32fb8077bc4bbac5d590"
+    },
+    {
+      "sceneIndex": 4,
+      "sha256": "fe97df1a07e7814f94148520a065035ec2a69dcf6ad0568c6d4f948157f3284f"
+    },
+    {
+      "sceneIndex": 5,
+      "sha256": "c50c1553ece7fdb308ba75d26e3895e6c138dfcfafe998bfbe2d6c9bb74e62fb"
+    }
+  ]
+}

@@ -314,3 +314,20 @@ Marker = dye pulse flushed through every pipe: cleanly splits before/after; syst
 ║ Bulkhead           ║ Isolate failure domains — one slow service can't exhaust all threads ║
 ║ Fallback           ║ Serve degraded response when dependency fails (stale cache, default) ║
 ╚════════════════════╩══════════════════════════════════════════════════════════════════╝
+
+### Jitter Types (for retry + backoff)
+
+Base wait time grows each retry (exponential backoff). Jitter changes that wait a bit, so many clients don't retry at the exact same moment.
+
+╔══════════════════════╦══════════════════════════════════════════╦═══════════════════════════════════════════╗
+║ Type                 ║ Formula                                   ║ Example (base=1s, attempt=3 → base=4s)    ║
+╠══════════════════════╬════════════════════════════════════════════╬═══════════════════════════════════════════╣
+║ Fixed jitter         ║ wait = base + constant                    ║ 4s + 0.2s = 4.2s, every time, same add-on ║
+║ Full jitter          ║ wait = random(0, base)                    ║ random(0, 4s) → could be 0.1s or 3.9s     ║
+║ Equal jitter         ║ wait = base/2 + random(0, base/2)         ║ 2s + random(0, 2s) → 2.0s to 4.0s         ║
+║ Decorrelated jitter  ║ wait = random(base_floor, prev_wait × 3)  ║ prev=4s → random(1s, 12s)                 ║
+╚══════════════════════╩════════════════════════════════════════════╩═══════════════════════════════════════════╝
+
+**Fixed jitter** — every retry gets the same small add-on, no randomness. Weakest option: if 1,000 clients fail at the same second, they still retry within the same narrow window (base + constant), just shifted slightly. Rarely used alone in production; mentioned here mainly as the baseline to contrast against.
+
+**Interview cue:** "how do you stop retries from syncing up (thundering herd)?" → name full jitter or decorrelated jitter as the strong answer (AWS's own backoff research recommends these); fixed jitter barely helps because the spread is too narrow.

@@ -53,6 +53,7 @@ event ordering, total order, partial order, causal order, happens-before relatio
 read-your-writes, monotonic reads, monotonic writes, writes-follow-reads, session guarantee → § SESSION / CLIENT-CENTRIC GUARANTEES
 global state, consistent snapshot, distributed snapshot, chandy-lamport, marker, cut, checkpoint → § GLOBAL STATE / SNAPSHOTS
 circuit breaker, retry, timeout, bulkhead                      → § RESILIENCE PATTERNS
+jitter, fixed jitter, full jitter, equal jitter, decorrelated jitter, thundering herd retry → § JITTER TYPES (FOR RETRY + BACKOFF)
 
 ## G6 · Scale & Infrastructure  (cheatsheet-g6-scale.md)
 load balancing, round robin, least connections, consistent hash → § LOAD BALANCING

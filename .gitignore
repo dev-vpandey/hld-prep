@@ -8,9 +8,14 @@
 
 # Editor
 .idea/
-.vscode/
+.vscode/*
+!.vscode/tasks.json
 *.swp
 *.swo
+
+# Notes preview dependencies and atomic build output
+node_modules/
+notes/explanations/.distributed-systems-foundations.*.tmp
 
 # Logs
 *.log
